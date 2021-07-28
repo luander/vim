@@ -1,66 +1,39 @@
-" Functional changes
+" Plugins vim-plug (https://github.com/junegunn/vim-plug)
+call plug#begin('~/.vim/plugged')
 
-"Map ESC key to 'jk'
-inoremap jk <ESC>
-"Not sure of this one
-let mapleader = ","
+Plug 'rakr/vim-one'             " vim-one color theme
+" Plug 'scrooloose/nerdtree'      " side bar file tree
+Plug 'itchyny/lightline.vim'    " minimal status bar
+Plug 'tpope/vim-commentary'     " use 'gcc' to comment/uncomment a line or a block
+Plug 'ervandew/supertab'        " Supertab adds code completion to the <Tab> key
+Plug 'tpope/vim-fugitive'       " Use git inside vim, :Git
+Plug 'Yggdroot/indentLine'      " Show indentation lines
 
-"Identation, syntax and encoding
-filetype plugin indent on
-syntax on
-set encoding=utf-8
+call plug#end()
 
-"Set to highlight search results
-set hlsearch
-
-"Show line numbers
-set number
-
-"Map the ':' to ';'
-noremap ; :
-
-" vim-plug (https://github.com/junegunn/vim-plug) settings 
-" Automatically install vim-plug and run PlugInstall if vim-plug not found
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
-call plug#begin('~/.vim/plugged')
-Plug 'matze/vim-move'
-Plug 'tpope/vim-commentary'
-Plug 'sickill/vim-pasta'
-Plug 'justinmk/vim-sneak'
-Plug 'ervandew/supertab'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
+" Essential key remaps
+inoremap jk <ESC>
+noremap ; :
 
-Plug 'tpope/vim-fugitive'
-Plug 'gcavallanti/vim-noscrollbar'
+" Identation, syntax and encoding
+filetype plugin indent on
+syntax on
+set encoding=utf-8
 
-Plug 'sts10/vim-mustard'
+" Set to highlight search results
+set hlsearch
 
-Plug 'vim-ruby/vim-ruby',          { 'for': ['ruby', 'eruby'] }
-Plug 'tpope/vim-rails',            { 'for': ['ruby', 'eruby'] }
-Plug 'nelstrom/vim-markdown-folding',{ 'for': 'markdown' }
-Plug 'dhruvasagar/vim-table-mode', { 'for': ['csv', 'xls', 'xlsx'] }
-Plug 'junegunn/goyo.vim',          { 'for': ['markdown', 'html', 'text'] }
-Plug 'tpope/vim-markdown',         { 'for': 'markdown' }
+" Set indentation character
+let g:indentLine_char = '⦙'
 
-Plug 'othree/html5.vim'
-Plug 'sts10/vim-closed-captioning', { 'for': 'srt' }
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+set laststatus=2
+set noshowmode
 
-
-call plug#end()
-
-set statusline=%f
-set statusline+=\ %h%w%m%r
-set statusline+=%-17(%{exists('g:loaded_fugitive')?fugitive#statusline():''}\%)
-set statusline+=%=
-set statusline+=\ %{noscrollbar#statusline(9,'_','=')}
-set statusline+=\ %P/%L
-set statusline+=\ 
-
+" For .yaml files, set ident to 2 spaces
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
